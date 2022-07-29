@@ -15,15 +15,29 @@
 </head>
 <body>
 
-<table width="100%" height="100%">
+<table width="90%" height="500px">
 
     <tbody>
         <tr>
-            <td>
+            <td width="200px">
+                <div style="text-align: left; padding-left: 8px; padding-top: 10px; color: cornflowerblue; font-size: 20px; font-weight: bold;">CLICK BELOW TITLES</div>
+            </td>
+            <td width="600px">
+                <div style="text-align: left; padding-left: 100px; padding-top: 10px; color: cornflowerblue; font-size: 20px; font-weight: bold;">
+                    CHART APPEARS BELOW ON CLICK (Hover on data points)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width="200px">
                 <div id="job_title" style="height: 100%;"></div>
             </td>
-            <td>
-                <div id="data_plot" height = '100%'></div>
+            <td width="600px">
+
+
+                <div id="data_plot" height = '100%'>
+                    <svg width="500", height="500"></svg>
+                </div>
             </td>
         </tr>
     </tbody>
@@ -66,7 +80,7 @@
                 // .attr("dy", ".35em")
             .text(function(d,i) {return d; })
             .on("click", function(d) {
-                console.log(d);
+                // console.log(d);
                 // alert(d.srcElement.__data__);
 
                 render_chart(data, d.srcElement.__data__);
@@ -74,6 +88,14 @@
     }
 
     function render_chart(data, job_selected) {
+        //tooltip
+        var tooltip = d3.select("body")
+            .append("div")
+            .style("position", "absolute")
+            .style("z-index", "10")
+            .style("visibility", "hidden")
+            .text("fdsfdsf");
+
 
         // filtered_data = new Map();
         //
@@ -156,15 +178,36 @@
             .attr("cx", function (d) { return x(parseInt(d.work_year)) + 83 ; } )
             .attr("cy", 0)
             .attr("r", 5)
-            .style("fill", "#69b3a2");
+            .datum(function (d, i) { return d;})
+            .style("fill", "#69b3a2")
+            // .text(function(d) { return parseInt(d.salary); })
+            .on("mouseover", function(d){
+                rec = d3.select(this).datum()
+                // console.log(tooltip)
+                tooltip.text(
+                    "Title: " + rec.job_title +
+                    ", Salary: $" + rec.salary +
+                    ", Experience Level: " + rec.experience_level +
+                    ", Location: " + rec.company_location +
+                    ", Company Size: " + rec.company_size);
+                return tooltip.style("visibility", "visible");
+            })
+            .on("mousemove", function(){return tooltip.style("top",
+                (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+            // .on("click", function(d) {
+            //     d3.select(this).datum();
+            //
+            // });
 
 
         svg.selectAll("circle")
             .data(filtered_data)
             .transition()
             .duration(2000)
-            .attr("cy", function (d) { console.log(d.salary);return y(parseInt(d.salary)); } )
-            .delay(function(d, i){console.log(i);return(i*10)});
+            .attr("cy", function (d) {return y(parseInt(d.salary)) ; } )
+            .delay(function(d, i){return(i * 10)});
 
     }
 
