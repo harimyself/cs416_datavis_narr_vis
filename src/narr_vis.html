@@ -3,7 +3,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title></title>
-<script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
     <style>
         .job-title {
             text-shadow: 1px 1px gray;
@@ -48,9 +50,12 @@
 
 <script type="text/javascript">
 
+
+
     const data_loader = d3.csv('ds_salaries.csv');
     var total_width, total_height;
 
+    max_salary_recorded = 0;
     colors = ["#4B0082", "#8B0000", "#FF4500", "#008080", "#191970", "#00CED1", "#BDB76B"]
 
     data_loader.then(render_svg);
@@ -100,11 +105,12 @@
             .text("fdsfdsf");
 
         filtered_data = [];
-
+        max_salary_recorded =0;
         for (let index = 0; index < data.length; ++index) {
             // if(data[index].job_title.toLowerCase())
             if(data[index].job_title == job_selected) {
                 filtered_data.push(data[index]);
+                max_salary_recorded = Math.max(max_salary_recorded, data[index].salary)
             }
         }
 
@@ -182,11 +188,6 @@
                 (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
             .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
-            // .on("click", function(d) {
-            //     d3.select(this).datum();
-            //
-            // });
-
 
         var axisLabelX = -50;
         var axisLabelY = plot_height / 2;
@@ -211,9 +212,47 @@
             .delay(function(d, i){return(i * 10)});
 
 
+        svg.selectAll("circle")
+            .filter(function (d, i) {
+                console.log(parseInt(d.salary) == parseInt(max_salary_recorded))
+                return parseInt(d.salary) === parseInt(max_salary_recorded);
+            })
+            .each(function (d, i) {
+                // console.log(d3.select(this).attr("cx")+"  "+d3.select(this).attr("cy"));
+                cy =  y(parseInt(d.salary));
+                cx = parseInt(d3.select(this).attr("cx"));
+            })
+        console.log(cx+"  "+cy);
+
+        const annotations = [
+            {
+                note: {
+                    label: "ever recorded for this title",
+                    title: "Max Salary"
+                },
+                type: d3.annotationCalloutCircle,
+                subject: {
+                    radius: 10,         // circle radius
+                    radiusPadding: 20   // white space around circle befor connector
+                },
+                color: [color],
+                x: cx,
+                y: cy,
+                dy: 10,
+                dx: 20
+            }
+        ]
+
+        const makeAnnotations = d3.annotation()
+            .annotations(annotations);
+        svg.append("g")
+            .call(makeAnnotations)
     }
 
-
+    function sleep1(delay) {
+        var start = new Date().getTime();
+        while (new Date().getTime() < start + delay);
+    }
 
 </script>
 </body>
