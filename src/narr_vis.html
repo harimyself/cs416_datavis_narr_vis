@@ -42,6 +42,10 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td></td>
+            <td style="text-align: left;padding-left: 250px;padding-top: 10px"><button onClick="window.location.reload();">Reset Plot</button></td>
+        </tr>
     </tbody>
 </table>
 
@@ -71,6 +75,8 @@
             // if(data[index].job_title.toLowerCase())
             job_titles.add(data[index].job_title);
         }
+
+        job_titles = Array.from(job_titles).sort();
         // var total_width = parseInt(svg.style("width"), 10);
         // var total_height = parseInt(svg.style("height"), 10);
 
@@ -91,11 +97,17 @@
                 // console.log(d);
                 // console.log(d.srcElement.style.fill);
 ``
-                render_chart(data, d.srcElement.__data__, d.srcElement.style.fill);
+                render_chart(data, d.srcElement.__data__, [d.srcElement.style.fill], job_titles);
             });
+
+        render_chart(data, "all", colors, job_titles);
     }
 
-    function render_chart(data, job_selected, color) {
+    function render_chart(data, job_selected, colors, job_titles) {
+
+        high_light_color=""
+        high_light_data = ""
+
         //tooltip
         var tooltip = d3.select("body")
             .append("div")
@@ -106,11 +118,21 @@
 
         filtered_data = [];
         max_salary_recorded =0;
-        for (let index = 0; index < data.length; ++index) {
-            // if(data[index].job_title.toLowerCase())
-            if(data[index].job_title == job_selected) {
+        if(job_selected == 'all') {
+            // add all
+            for (let index = 0; index < data.length; ++index) {
+                // if(data[index].job_title.toLowerCase())
                 filtered_data.push(data[index]);
                 max_salary_recorded = Math.max(max_salary_recorded, data[index].salary)
+            }
+        } else {
+            //filter
+            for (let index = 0; index < data.length; ++index) {
+                // if(data[index].job_title.toLowerCase())
+                if(data[index].job_title == job_selected) {
+                    filtered_data.push(data[index]);
+                    max_salary_recorded = Math.max(max_salary_recorded, data[index].salary)
+                }
             }
         }
 
@@ -170,7 +192,16 @@
             .attr("cy", 0)
             .attr("r", 5)
             .datum(function (d, i) { return d;})
-            .style("fill", color)
+            .style("fill", function (d, i) {
+                if(colors.length == 1)
+                    return colors[0];
+                else {
+                    idx= job_titles.indexOf(d.job_title);
+                    // console.log(idx +"   "+colors[idx]+"   "+d.job_title);
+                    high_light_color = colors[idx];
+                    return colors[idx];
+                }
+            })
             // .text(function(d) { return parseInt(d.salary); })
             .on("mouseover", function(d){
                 rec = d3.select(this).datum()
@@ -221,21 +252,23 @@
                 // console.log(d3.select(this).attr("cx")+"  "+d3.select(this).attr("cy"));
                 cy =  y(parseInt(d.salary));
                 cx = parseInt(d3.select(this).attr("cx"));
+                high_light_data = d;
             })
         console.log(cx+"  "+cy);
 
+        ann_color = job_selected == 'all' ? high_light_color : colors[0]
         const annotations = [
             {
                 note: {
                     label: "ever recorded for this title",
-                    title: "Max Salary"
+                    title: "Max Salary: $" + high_light_data.salary
                 },
                 type: d3.annotationCalloutCircle,
                 subject: {
                     radius: 10,         // circle radius
                     radiusPadding: 20   // white space around circle befor connector
                 },
-                color: [color],
+                color: [ann_color],
                 x: cx,
                 y: cy,
                 dy: 10,
@@ -247,6 +280,21 @@
             .annotations(annotations);
         svg.append("g")
             .call(makeAnnotations)
+            .on("mouseover", function(d){
+                rec = high_light_data
+                // console.log(tooltip)
+                tooltip.text(
+                    "Title: " + rec.job_title +
+                    ", Salary: $" + rec.salary +
+                    ", Experience Level: " + rec.experience_level +
+                    ", Location: " + rec.company_location +
+                    ", Company Size: " + rec.company_size);
+                // tooltip.style("color", color);
+                return tooltip.style("visibility", "visible");
+            })
+            .on("mousemove", function(){return tooltip.style("top",
+                (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
     }
 
     function sleep1(delay) {
