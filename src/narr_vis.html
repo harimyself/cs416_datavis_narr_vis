@@ -23,8 +23,8 @@
                 <div style="text-align: left; padding-left: 8px; padding-top: 10px; color: cornflowerblue; font-size: 20px; font-weight: bold;">CLICK BELOW TITLES</div>
             </td>
             <td width="600px">
-                <div style="text-align: left; padding-left: 100px; padding-top: 10px; color: cornflowerblue; font-size: 20px; font-weight: bold;">
-                    CHART APPEARS BELOW ON CLICK (Hover on data points)
+                <div id = "chart_apper_div" style="text-align: left; padding-left: 80px; padding-top: 10px; color: cornflowerblue; font-size: 20px; font-weight: bold;">
+                    CHART APPEARS BELOW ON CLICK
                 </div>
             </td>
         </tr>
@@ -50,6 +50,8 @@
 
     const data_loader = d3.csv('ds_salaries.csv');
     var total_width, total_height;
+
+    colors = ["#4B0082", "#8B0000", "#FF4500", "#008080", "#191970", "#00CED1", "#BDB76B"]
 
     data_loader.then(render_svg);
 
@@ -79,15 +81,16 @@
                 // .attr("fill", "black")
                 // .attr("dy", ".35em")
             .text(function(d,i) {return d; })
+            .style('fill', function (d, i){return colors[i];})
             .on("click", function(d) {
                 // console.log(d);
-                // alert(d.srcElement.__data__);
-
-                render_chart(data, d.srcElement.__data__);
+                // console.log(d.srcElement.style.fill);
+``
+                render_chart(data, d.srcElement.__data__, d.srcElement.style.fill);
             });
     }
 
-    function render_chart(data, job_selected) {
+    function render_chart(data, job_selected, color) {
         //tooltip
         var tooltip = d3.select("body")
             .append("div")
@@ -95,26 +98,6 @@
             .style("z-index", "10")
             .style("visibility", "hidden")
             .text("fdsfdsf");
-
-
-        // filtered_data = new Map();
-        //
-        // for (let index = 0; index < data.length; ++index) {
-        //     // if(data[index].job_title.toLowerCase())
-        //     if(data[index].job_title == job_selected) {
-        //         sal = filtered_data.get(data[index].work_year);
-        //
-        //         // console.log(data[index].work_year + "   " + sal);
-        //         // console.log("11   "+ sal)
-        //         if(sal == null || sal == undefined || sal == 'undefined')
-        //             sal = data[index].salary;
-        //         else
-        //             sal = Math.max(sal, data[index].salary)
-        //
-        //         // console.log(data[index].work_year + "   " + sal);
-        //         filtered_data.set(data[index].work_year, sal);
-        //     }
-        // }
 
         filtered_data = [];
 
@@ -132,6 +115,8 @@
 
         // Clear previous charts
         document.getElementById("data_plot").innerHTML = "";
+
+        document.getElementById("chart_apper_div").innerHTML= "HOVER ON DATA POINTS FOR MORE DETAILS";
 
 
         var svg = d3.select('#data_plot')
@@ -179,7 +164,7 @@
             .attr("cy", 0)
             .attr("r", 5)
             .datum(function (d, i) { return d;})
-            .style("fill", "#69b3a2")
+            .style("fill", color)
             // .text(function(d) { return parseInt(d.salary); })
             .on("mouseover", function(d){
                 rec = d3.select(this).datum()
@@ -190,6 +175,7 @@
                     ", Experience Level: " + rec.experience_level +
                     ", Location: " + rec.company_location +
                     ", Company Size: " + rec.company_size);
+                // tooltip.style("color", color);
                 return tooltip.style("visibility", "visible");
             })
             .on("mousemove", function(){return tooltip.style("top",
@@ -202,12 +188,28 @@
             // });
 
 
+        var axisLabelX = -50;
+        var axisLabelY = plot_height / 2;
+        svg.append('g')
+            .attr('transform', 'translate(' + -50 + ', ' + plot_height / 2 + ')')
+            .append('text')
+            .attr('text-anchor', 'middle')
+            .attr('transform', 'rotate(-90)')
+            .text('SALARY');
+
+        svg.append('g')
+            .attr('transform', 'translate(' + plot_height/2 + ', ' + (plot_height+30) + ')')
+            .append('text')
+            .attr('text-anchor', 'middle')
+            .text('YEAR');
+
         svg.selectAll("circle")
             .data(filtered_data)
             .transition()
             .duration(2000)
             .attr("cy", function (d) {return y(parseInt(d.salary)) ; } )
             .delay(function(d, i){return(i * 10)});
+
 
     }
 
