@@ -19,7 +19,7 @@ The visualization follows `interactive slideshow` designs to illustrate the data
 Does the narrative visualization follow that structure?
 
 
-{% include narr_vis.html max-width="850px" max-height="500px" %}
+{% include narr_vis.html max-width="850px" max-height="800px" %}
 
 ### Markdown
 
