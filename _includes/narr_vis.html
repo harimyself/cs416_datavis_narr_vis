@@ -13,6 +13,13 @@
             font-family: sans-serif;
             text-decoration: underline;
         }
+
+        .job-title-selected {
+            font-size: 20px;
+            font-family: sans-serif;
+            color: #bdbbbb;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -252,11 +259,20 @@
             })
         console.log(cx+"  "+cy);
 
+        if(job_selected != 'all') {
+            svg.append('g')
+                .attr('transform', 'translate(' + 350 + ', ' + 10 + ')')
+                .append('text')
+                .attr('class', 'job-title-selected')
+                .style('fill', '#bdbbbb')
+                .text(high_light_data.job_title);
+        }
+
         ann_color = job_selected == 'all' ? high_light_color : colors[0]
         const annotations = [
             {
                 note: {
-                    label: high_light_data.job_title,
+                    label: "Year: " + high_light_data.work_year,
                     title: "Max Salary: $" + high_light_data.salary
                 },
                 type: d3.annotationCalloutCircle,
