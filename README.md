@@ -7,7 +7,7 @@ You can use the [editor on GitHub](https://github.com/harimyself/cs416_datavis_n
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 
-{% include_relative src/narr_vis.html %}
+{% include narr_vis.html %}
 
 ### Markdown
 
