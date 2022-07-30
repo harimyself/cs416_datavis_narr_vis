@@ -2,12 +2,24 @@
 ### Author: hbojja2@illinois.edu
 
 
-You can use the [editor on GitHub](https://github.com/harimyself/cs416_datavis_narr_vis/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+<br></br>
+#### Summary
+This page was constructed based on the `data-science-job-salaries` dataset from kaggle. The idea is to understand the data science job market between the years 2020 to 2022. For this we have chosen 7 most interesting jobs titles from the full set of 41 different jobs.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+The goal of this narrative visualization is show 
+1. Which of 7 Data Science or AI jobs has highest paying salary and in which year? 
+2. Which year between 2020-2022 a particular job title has highest salary?
+
+<br></br>
+
+#### Narrative Structure.
+The visualization follows `interactive slideshow` designs to illustrate the data.
 
 
-{% include narr_vis.html %}
+Does the narrative visualization follow that structure?
+
+
+{% include narr_vis.html max-width="850px" max-height="500px" %}
 
 ### Markdown
 
