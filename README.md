@@ -6,26 +6,28 @@
 #### Summary:
 This page was constructed based on the `data-science-job-salaries` dataset from kaggle. The idea is to understand the data science job market between the years 2020 to 2022. For this we have chosen 7 most interesting jobs titles from the full set of 41 different jobs.
 
+The 7 job titles illustrated are listed below in the same order.
+
+##### Job Titles:
+1. Applied Data Scientist
+2. Data Science Manager
+3. Data Scientist
+4. Data Specialist
+5. Head of Data Science
+6. Machine Learning Engineer
+7. Machine Learning Scientist
+
 The goal of this narrative visualization is show 
 1. Which of 7 Data Science or AI jobs has highest paying salary and in which year? 
 2. Which year between 2020-2022 a particular job title has highest salary?
 
-The 7 job titles illustrated are also listed below in the same order.
 
-##### Job Titles:
-1. Applied Data Scientist 
-2. Data Science Manager 
-3. Data Scientist 
-4. Data Specialist 
-5. Head of Data Science 
-6. Machine Learning Engineer 
-7. Machine Learning Scientist
 
-##### Years Illustrated: 2020, 2021, 2022
+**Years Illustrated:** 2020, 2021, 2022
 
 
 #### Narrative & Visual Structure:
-The visualization follows `interactive slideshow` designs to illustrate the data.
+The visualization follows `interactive slideshow` designs to illustrate the data. The design lets the viewer access the scenes in any order the viewer chooses.
 
 All job titles listed above are dynamically extracted from the job salaries csv file. These `clickable job titiles` are listed horizontally on left side of the visualization. Each title is rendered with a unique color. The same color would be used further to render the data related to that job title.
 
@@ -54,6 +56,8 @@ Each job title listed is rendered with unique color for clear distinguishion. Th
 
 Each of the job title used as trigger to transition from one scene to another. The data points in the scene plot react for hovering on top of them. The details of the hovered data point are shown in tooltip. There is an **Reset** button at the bottom to trigger the default state.
 
+The highlight of the transition is that the scenes can be accessed in any order.
+
 ### Visualization
-{% include narr_vis.html max-width="850px" max-height="800px" %}
+{% include narr_vis.html max-width="900px" max-height="800px" %}
 
