@@ -52,7 +52,7 @@
 <!--            <td style="text-align: left;padding-left: 250px;padding-top: 10px"><button onClick="window.location.reload();">Reset Plot</button></td>-->
             <td style="text-align: left;padding-left: 250px;padding-top: 10px">
                 <button onClick="previous_scene()">Prev</button>
-                <button onClick="window.location.reload();">Reset Plot</button>
+                <button onClick="window.location.reload();">Summary</button>
                 <button onClick="next_scene()">Next</button>
             </td>
         </tr>
@@ -89,7 +89,7 @@
         job_title_index = job_title_index + 1
         if(job_title_index >= root_job_titles.length)
             job_title_index = root_job_titles.length-1;
-        
+
         render_chart(input_data, root_job_titles[job_title_index], [colors[job_title_index]], root_job_titles);
     }
 
