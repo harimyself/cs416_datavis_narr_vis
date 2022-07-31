@@ -1,5 +1,5 @@
 
-## Project: Highest paid salary for Data Science jobs between 2020-22
+## Project: Maximum recorded salary for Data Science jobs between 2020-22
 ### Author: hbojja2@illinois.edu
 
 
