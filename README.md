@@ -25,10 +25,6 @@ The goal of this narrative visualization is show
 
 **Years Illustrated:** 2020, 2021, 2022
 
-
-### Visualization
-{% include narr_vis.html max-width="900px" max-height="800px" %}
-
 #### Narrative & Visual Structure:
 The visualization follows interactive slideshow designs to illustrate the data. Though the slides are organized in the sorted order of job titles, the viewer has the liberty to click and view the scene in any demanded order.
 
@@ -70,3 +66,5 @@ The data points in the scene plot react by hovering event on top of them. The de
 There is a Summary button at the bottom to trigger the default state.
 
 
+### Visualization
+{% include narr_vis.html max-width="900px" max-height="800px" %}
