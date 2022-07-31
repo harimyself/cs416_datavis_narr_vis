@@ -19,7 +19,7 @@ The 7 job titles illustrated are listed below in the same order.
 
 The goal of this narrative visualization is show 
 1. Which of 7 Data Science or AI jobs has highest paying salary and in which year? 
-2. Which year between 2020-2022 a particular job title has highest salary?
+2. Which year between 2020-2022 a particular job title has highest recorded salary?
 
 
 
@@ -36,7 +36,7 @@ Upon clicking a job title the scene on the right side of the visualization chang
 
 **For Example:** The job `Data Scientist` is rendered in red color. The plot rendered upon clicking the title has the same red colored data points.
 
-##### Scene:
+#### Scene:
 Each scene is a plot with years 2020, 2021, 2022 on x-axis. The salaries are then rendered on y-axis. The data point that appears highest on y-axis considered the maximum salary observed.
 
 The viewer can transition from one scene to another by clicking on the titles listed on left side of the illustration. The plot can also be reset by clicking on `reset` button at the bottom of the graph.
@@ -47,7 +47,7 @@ The maximum salary point has also been **annotated with callout circle** to grab
 
 **For Example:** The default state of the plot shows the Max Salary: $412000 for the job Data Scientist. 
 
-##### Parameters and triggers:
+#### Parameters and triggers:
 Each job title listed is rendered with unique color for clear distinguishion. The following parameters are captured and transferred to start rendering a scene.
 
 - Job Titles: Job titles change as the viewer clicks on next or prev buttons. The changed value is shown on the top of the scene.
@@ -60,7 +60,7 @@ The page is in default state on load. Viewers could navigate from one scene to a
 Default State: Shows salaries of all job titles across all years. Summary burron can restore the page to this state from any state of scenes.
 Title State: This state can be reached either by clicking on job title or next and prev buttons.
 
-##### Triggers:
+#### Triggers:
 Next and Prev buttons, each of the job titles used as a trigger to transition from one scene to another.
 The data points in the scene plot react by hovering event on top of them. The details of the hovered data point is shown in tooltip.
 There is a Summary button at the bottom to trigger the default state.
