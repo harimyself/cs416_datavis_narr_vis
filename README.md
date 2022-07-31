@@ -1,9 +1,9 @@
-## CS416 Data Visualization: Narrative Visualization
+
+## Project: Highest paid salary for Data Science jobs between 2020-22
 ### Author: hbojja2@illinois.edu
 
 
-
-#### Summary:
+#### Introduction:
 This page was constructed based on the `data-science-job-salaries` dataset from kaggle. The idea is to understand the data science job market between the years 2020 to 2022. For this we have chosen 7 most interesting jobs titles from the full set of 41 different jobs.
 
 The 7 job titles illustrated are listed below in the same order.
@@ -19,7 +19,7 @@ The 7 job titles illustrated are listed below in the same order.
 
 The goal of this narrative visualization is show 
 1. Which of 7 Data Science or AI jobs has highest paying salary and in which year? 
-2. Which year between 2020-2022 a particular job title has highest recorded salary?
+2. Which year between 2020-2022 a particular job title has highest salary?
 
 
 
